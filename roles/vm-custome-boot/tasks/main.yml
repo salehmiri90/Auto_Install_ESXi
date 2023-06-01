@@ -1,0 +1,30 @@
+---
+
+- name: Delete official boot files
+  shell: |
+          rm -f /home/deploy/baremetal/{{ item.hostName }}/boot.cfg
+          rm -f /home/deploy/baremetal/{{ item.hostName }}/efi/boot/boot.cfg
+  with_items:
+          - "{{ hosts }}"
+
+- name: Copying custom boot.cfg to root directory for UEFI
+  copy:
+          src: BOOT.CFG
+          dest: /home/deploy/baremetal/{{ item.hostName }}/
+          remote_src: no
+          owner: root
+          group: root
+          mode: '0744'
+  with_items:
+          - "{{ hosts }}"
+
+- name: Copying custom boot.cfg to root directory for UEFI
+  copy:
+          src: BOOT.CFG
+          dest: /home/deploy/baremetal/{{ item.hostName }}/efi/boot/
+          remote_src: no
+          owner: root
+          group: root
+          mode: '0744'
+  with_items:
+          - "{{ hosts }}"

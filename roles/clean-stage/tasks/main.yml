@@ -1,0 +1,9 @@
+---
+
+- name: Unmount ISO & Clean Deploy Folders expcept StageISO Files 
+  shell: |
+          sudo umount /mnt/{{ item.hostName }}
+          sudo rm -rf {{ file_path }}/{{ item.hostName }}
+          sudo rm -rf /mnt/*
+  with_items:
+          - "{{ hosts }}"

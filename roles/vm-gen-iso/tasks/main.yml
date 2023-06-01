@@ -1,0 +1,21 @@
+---
+
+- name: Generate bootable RHEL ISO from {{ file_path }}
+  shell: >
+          mkisofs
+          -o {{ iso_path }}/{{ item.hostName }}.iso
+          -relaxed-filenames
+          -J
+          -R
+          -b isolinux.bin
+          -c boot.cat
+          -no-emul-boot
+          -boot-load-size 4
+          -boot-info-table
+          -eltorito-alt-boot
+          -e efiboot.img
+          -boot-load-size 1
+          -no-emul-boot
+          "{{ file_path }}"/{{ item.hostName }}/
+  with_items:
+          - "{{ hosts }}"

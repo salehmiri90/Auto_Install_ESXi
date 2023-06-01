@@ -1,0 +1,7 @@
+---
+
+- name: Make ISO file to UEFI
+  shell: |
+          sudo isohybrid --uefi {{ iso_path }}/{{ item.hostName }}.iso
+  with_items:
+          - "{{ hosts }}"

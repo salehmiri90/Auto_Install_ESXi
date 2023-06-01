@@ -1,0 +1,50 @@
+---
+- hosts: ilo-esxi
+  gather_facts: no
+  vars:
+          - ansible_python_interpreter: /usr/bin/python3
+          - ansible_host_key_checking: no
+          - validate_certs: no
+  tasks:
+  - name: Block Generate ISO with KS file
+    block:
+            - name: Mount VMware ISO file and copy files
+              include_role:
+                      name: copy-iso-mount
+
+            - name: Copy Custome BOOT Files
+              include_role:
+                      name: vm-custome-boot
+
+            - name: Generate Kickstart File
+              include_role:
+                      name: vm-ks
+
+            - name: Generate ISO
+              include_role:
+                      name: vm-gen-iso
+
+            - name: Make UEFI ISO
+              include_role:
+                      name: iso-uefi
+
+            - name: Clean Deploy Stage
+              include_role:
+                      name: clean-stage
+    tags: iso
+###----------------------------------------------###
+  - name: Use ISO to boot ILO
+    block:
+            - name: Using Prepared ISO file to Boot ILO without Human interactive
+              include_role:
+                      name: ilo-provisioning
+    tags: ilo
+###----------------------------------------------###
+
+
+...
+
+
+
+
+

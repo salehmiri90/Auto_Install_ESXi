@@ -1,0 +1,29 @@
+---
+
+- name: Create Kickstart file for OSD Servers
+  copy:
+          force: yes
+          dest: /home/deploy/baremetal/{{ item.hostName }}/KS.CFG
+          content: |
+                  vmaccepteula
+                  clearpart --firstdisk=local --overwritevmfs
+                  install --firstdisk=local --overwritevmfs
+                  rootpw {{ root_password }}
+                  network --bootproto=static --addvmportgroup=1 --vlanid={{ global_vlan_id }} --ip={{ item.esxi_ip }} --netmask={{ global_netmask }} --gateway={{ global_gw }} --nameserver={{ global_dns1 }} --hostname={{ item.hostName }}
+                  %firstboot --interpreter=busybox
+                  vim-cmd hostsvc/enable_ssh
+                  vim-cmd hostsvc/start_ssh
+                  vim-cmd hostsvc/enable_esx_shell
+                  vim-cmd hostsvc/start_esx_shell
+                  esxcli system module parameters set -m tcpip6 -p ipv6=0
+                  esxcli network ip set --ipv6-enabled=false
+                  esxcli system ntp set --server={{ global_ntp1 }} --server={{ global_ntp2 }}
+                  esxcli network ip dns server add --server={{ global_dns2 }}
+                  esxcli system ntp set --enabled=true
+                  esxcli system ntp start
+                  #esxcli system settings advanced set -o /UserVars/HostClientCEIPEnabled -i 0
+                  reboot
+  with_items:
+          - "{{ hosts }}"
+
+

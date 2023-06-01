@@ -1,0 +1,6 @@
+### ILO Provisioning ###
+[ilo-esxi]
+ilo-esxi
+
+[hpe-ilo]
+esxi-ilo1

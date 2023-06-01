@@ -1,0 +1,10 @@
+---
+hosts:
+  - hostName: srv33.saleh.miri.local
+    esxi_ip: 1.6.29.9
+    ilo_ip: 1.18.66.9
+
+  - hostName: srv34.saleh.miri.local
+    esxi_ip: 1.6.29.10
+    ilo_ip: 1.18.66.10
+
