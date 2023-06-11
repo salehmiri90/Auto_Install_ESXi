@@ -11,7 +11,7 @@ global_ntp1: 1.6.20.4
 global_ntp2: 1.6.20.5
 
 
-###### HPE ILO info
+###### HPE ILO info #The iLO user's privilage have to access as Administrator
 ilo_user: administrator
 ilo_pass: password
 ilo_state: boot_once
