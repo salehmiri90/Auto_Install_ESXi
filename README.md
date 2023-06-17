@@ -2,23 +2,47 @@
 
 This repository provides a fully automated solution for installing the ESXi8u1 operating system on HPE physical servers using iLO. With this code, you can effortlessly deploy ESXi servers by simply completing the variables and running the main playbook on your Ansible server. Say goodbye to manual installation hassles and hello to streamlined and efficient deployment!
 
-## Installation Steps
+In this code, I’m using Kickstart without PXE to do the ESXi version 8u1 installation over HPE Gen10 Baremetal and do the post configuration to set NTP and etc. 
 
-Follow these steps to automate the installation of ESXi8u1 on your HPE products:
+I wrote custom roles to define the main playbook, so please star this code to easily find it later.
 
-1. Clone this repository to your Ansible server.
+ESXi installation process can be simplified by means of Kickstart Installation method This method utilizes so called Kickstart File, which describes the configuration, required setup and post installation tasks for Kickstart installation.
+Kickstart File can be placed in the remote repository, accessible via NFS, HTTP, FTP, etc…, or can be included in ISO image, which is pretty convenient to store a Kickstart File.
 
-2. Update the variables in the `vars.yml` file with the necessary information for your ESXi servers. Ensure that you provide accurate details, including network configuration, storage settings, and other relevant parameters.
+In this tutorial we downloaded original ESXi8u1 ISO image then run one playbook file which has two block and 7 roles to mount iso in the Linux file system, modify it by adding Kickstart File (ks.cfg) and re-pack it to create custom UEFI bootable ESXi8u1 ISO image using mkisofs command.
 
-3. Run the main playbook on your Ansible server:
+Notice: The OS disks on bare metal server must exist on the first bays on your physical servers.
 
-   ```bash
-   ansible-playbook main.yml
-   ```
+My original ISO which I’m using to do below steps was included grub menu modifying as “ins.ks=cdrom:/KS.CFG”
 
-   This will initiate the automated installation process based on the provided variables.
+## Playbook Steps
+1st role: copy-iso-mount
 
-4. Sit back and relax! After a while, your ESXi servers will be up and running, ready for use.
+Mounting and copy cdrom items will do in this role.
+
+2nd role: vm-custome-boot
+
+In this step, I remove boot.cfg file from root and efi/boot directories, then put custom boot file to both destinations.
+
+3rd role: vm-ks
+
+In this step the Kickstart content for each host will be create and after that I set some esxi post configuration in this file. For example disable IPv6, set ntp service up and run, set secondary dns ip address will do here. 
+
+4th role: vm-gen-iso
+
+Using mkisofs command to create an ISO and put on the specific path which can located by nginx webserver.
+
+5th role: iso-uefi
+
+Using isohybrid command to force iso to be compatible with uefi and bios methods. 
+
+6th role: clean-stage
+
+Clear the stage and delete unnecessary files except created ISO files. 
+
+7th role: ilo-provisioning
+
+Using group_vars to authenticate to HPE iLO and use nginx webserver path to mount related ISO to the iLO media.
 
 ## Requirements
 
