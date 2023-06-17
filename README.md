@@ -19,7 +19,12 @@ My original ISO which I’m using to do below steps was included grub menu modif
 1st role: copy-iso-mount
 
 Mounting and copy cdrom items will do in this role.
-
+```bash
+mkdir /mnt/{{ item.hostName }}
+mount -o loop -t iso9660 {{ isosrc }}/{{ src_iso_file }} /mnt/{{ item.hostName }}/
+mkdir {{ file_path }}/{{ item.hostName }}
+cp -avRf /mnt/{{ item.hostName }}/* {{ file_path }}/{{ item.hostName }}/
+```
 2nd role: vm-custome-boot
 
 In this step, I remove boot.cfg file from root and efi/boot directories, then put custom boot file to both destinations.
