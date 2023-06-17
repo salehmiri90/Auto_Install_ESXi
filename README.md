@@ -24,7 +24,7 @@ My original ISO which I’m using to do below steps was included grub menu modif
 - Clone the repository to your local machine.
 - Install Ansible on your local machine.
 - Edit the hosts file to include the IP addresses of the target servers.
-- Edit the vars.yml file to include the required input parameters such as hostname and IP address.
+- Edit the host_vars and group_vars file to include the required input parameters such as hostname and IP address.
 - Run the playbook.
 
 ## What does this project contain?
