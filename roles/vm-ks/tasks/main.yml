@@ -21,8 +21,9 @@
                   esxcli network ip dns server add --server={{ global_dns2 }}
                   esxcli system ntp set --enabled=true
                   esxcli system ntp start
+                  esxcli system shutdown reboot --reason "OS installation finished"
                   #esxcli system settings advanced set -o /UserVars/HostClientCEIPEnabled -i 0
-                  reboot
+                  
   with_items:
           - "{{ hosts }}"
 
