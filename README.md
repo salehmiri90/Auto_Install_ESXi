@@ -2,7 +2,7 @@
 This repository provides a fully automated solution for installing the ESXi8u1 operating system on HPE physical servers using iLO. With this code, you can effortlessly deploy ESXi servers by simply completing the variables and running the main playbook on your Ansible server. Say goodbye to manual installation hassles and hello to streamlined and efficient deployment!
 
 ### 📖 Full Article on Medium
-[Medium/salehmiri90](https://medium.com/@salehmiri90/production-ready-esxi-deployment-by-ansible-without-human-interaction-a32011689a49) and the video names are:
+[Medium/salehmiri90](https://medium.com/@salehmiri90/production-ready-esxi-deployment-by-ansible-without-human-interaction-a32011689a49) 
 
 ###  Video Demo on Youtube
 
