@@ -2,7 +2,7 @@
 This repository provides a fully automated solution for installing the ESXi8u1 operating system on HPE physical servers using iLO. With this code, you can effortlessly deploy ESXi servers by simply completing the variables and running the main playbook on your Ansible server. Say goodbye to manual installation hassles and hello to streamlined and efficient deployment!
 
 ### 🎥 Video Demo on Youtube
-Instruction video is already uploaded to my youtube channel [salehmiri90](https://youtube.com/salehmiri90) and the video names are:
+Instruction video is already uploaded to my youtube channel [salehmiri90](https://youtube.com/@salehmiri90) and the video names are:
 
 &#9745; `ESXi Automated Installation with Kickstart on Baremetal`
 
